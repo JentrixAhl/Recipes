@@ -1,0 +1,14 @@
+.star {
+  font-size: 24px;
+  color: gold;
+}
+
+.star-filled::before {
+  content: "★";
+}
+.star-empty::before {
+  content: "☆";
+}
+.star-rating {
+  display: flex;
+}
