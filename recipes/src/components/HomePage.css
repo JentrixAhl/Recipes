@@ -45,6 +45,7 @@ p {
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  margin-bottom: 10px;
 }
 
 .link-button:hover {
@@ -55,4 +56,5 @@ p {
   font-size: 20px;
   font-weight: bold;
   color: darkblue;
+  margin-top: 20px;
 }

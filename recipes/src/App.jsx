@@ -149,7 +149,7 @@ function App() {
           draggable={true}
           showDots={true}
           responsive={responsive}
-          slidesToSlide={3}
+          slidesToSlide={1}
           keyBoardControl={true}
           containerClass="carousel-container"
           dotListClass="custom-dot-list-style"
