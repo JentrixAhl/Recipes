@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
-import RecipeDetails from "./RecipeDetails";
-import recipes from "./data.json";
+import RecipeDetails from "./components/RecipeDetails";
+import recipesData from "./data.json";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import StarRating from "./StarRating";
+import StarRating from "./components/StarRating";
 
 const responsive = {
   desktop: {
@@ -22,10 +22,16 @@ const responsive = {
 };
 
 function App() {
+  const [recipes, setRecipes] = useState(recipesData);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [viewingDetails, setViewingDetails] = useState(false);
+  const [recipeRating, setRecipeRating] = useState(0);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleImageClick = (recipe) => {
     setSelectedRecipe(recipe);
@@ -40,19 +46,53 @@ function App() {
       recipe.recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setSearchResults(results);
-    setViewingDetails(false); // Reset viewing details
+    setViewingDetails(false);
   };
 
   const handleViewDetails = (recipe) => {
     setSelectedRecipe(recipe);
     setViewingDetails(true);
   };
+  console.log(selectedRecipe);
+  const handleRatingClick = (rating) => {
+    if (selectedRecipe) {
+      const updatedRecipe = { ...selectedRecipe };
+      updatedRecipe.recipe.rating = rating;
+
+      const updatedRecipes = [...recipes];
+      const index = updatedRecipes.findIndex(
+        (recipe) => recipe.id === selectedRecipe.id
+      );
+
+      updatedRecipes[index] = updatedRecipe;
+
+      setRecipes(updatedRecipes);
+      setSelectedRecipe(updatedRecipe);
+    }
+  };
+
+  const handleRatingHover = (rating) => {
+    setRecipeRating(rating);
+  };
+
+  const handleRatingHoverLeave = () => {
+    setRecipeRating(0);
+  };
+
+  const handleRegistration = () => {
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Password:", password);
+
+    setName("");
+    setEmail("");
+    setPassword("");
+  };
 
   return (
     <div className="container">
       <h1>Jentrix's kitchen</h1>
 
-      {/* Search input and button */}
       <div className="search-container">
         <input
           type="text"
@@ -67,6 +107,10 @@ function App() {
         <RecipeDetails
           recipe={selectedRecipe}
           onClose={() => setViewingDetails(false)}
+          rating={recipeRating}
+          onRatingClick={handleRatingClick}
+          onRatingHover={handleRatingHover}
+          onRatingHoverLeave={handleRatingHoverLeave}
         />
       ) : searchResults.length > 0 ? (
         searchResults.map((recipe, index) => (
@@ -79,9 +123,12 @@ function App() {
             />
             <h2 className="recipe-name">{recipe.recipe.name}</h2>
             <p className="recipe-description">{recipe.recipe.description}</p>
-            <button onClick={() => handleViewDetails(recipe)}>
-              View Details
-            </button>
+            <StarRating
+              rating={recipe.recipe.rating}
+              onRatingClick={handleRatingClick}
+              onRatingHover={handleRatingHover}
+              onRatingHoverLeave={handleRatingHoverLeave}
+            />
           </div>
         ))
       ) : (
