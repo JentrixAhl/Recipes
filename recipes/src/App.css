@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -25,7 +25,8 @@ body {
 }
 
 .recipe-image {
-  width: 80%;
+  max-width: 80%;
+  max-height: 300px;
   margin-right: 20px;
   height: auto;
 }
@@ -70,4 +71,16 @@ body {
 
 .recipes-link:hover {
   background-color: #555;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    max-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .container {
+    max-width: 300px;
+  }
 }

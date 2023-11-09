@@ -2,11 +2,14 @@ import { useState } from "react";
 import "./Register.css";
 
 function Register() {
+  // State variables for email, registration status, and email validity
   const [email, setEmail] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
 
+  // Function to handle registration button click
   const handleRegistration = () => {
+    // Validate email before registration
     if (validateEmail(email)) {
       setIsRegistered(true);
       setIsEmailValid(true);
@@ -15,11 +18,13 @@ function Register() {
     }
   };
 
+  // Function to validate email using a regular expression
   const validateEmail = (email) => {
     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i;
     return emailPattern.test(email);
   };
 
+  // JSX structure for rendering the registration form
   return (
     <div className="page-container">
       <h2>Subscribe to our monthly Newsletter</h2>

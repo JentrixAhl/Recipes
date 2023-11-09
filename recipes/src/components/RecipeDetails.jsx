@@ -4,6 +4,7 @@ import data from "../data.json";
 import { useParams, useNavigate } from "react-router-dom";
 import StarRating from "./StarRating";
 
+// RecipeDetails component
 function RecipeDetails({
   rating,
   recipe,
@@ -11,24 +12,35 @@ function RecipeDetails({
   onRatingHover,
   onRatingHoverLeave,
 }) {
+  // Access the history object for navigation
   const history = useNavigate();
+
+  // Get the "id" parameter from the route
   const { id } = useParams();
+
+  // If no recipe is provided, display a message
   if (!recipe) {
     return <div>Recipe not found</div>;
   }
 
+  // Check if the recipe is a salad recipe
   const isSaladRecipe = recipe.recipe.name === "Fresh Vegetable Salad";
+
+  // Set the time label and value based on the recipe type
   const timeLabel = isSaladRecipe ? "Prep Time" : "Total Cooking Time";
   const timeValue = isSaladRecipe
     ? recipe.recipe.prepTime
     : recipe.recipe.totalAvarageCookingTime;
 
+  // Handle the hover event on the star rating
   const handleRatingHover = (hoveredRating) => {
     console.log(`Hovered over star rating: ${hoveredRating}`);
   };
 
+  // JSX structure for rendering the recipe details
   return (
     <div className="recipe-details">
+      {/* StarRating component for displaying and interacting with the recipe rating */}
       <StarRating
         rating={rating}
         onRatingClick={onRatingClick}

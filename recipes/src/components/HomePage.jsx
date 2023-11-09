@@ -3,21 +3,26 @@ import { Link } from "react-router-dom";
 import "./HomePage.css";
 
 function HomePage() {
+  // JSX structure for rendering the home page content
   return (
     <div className="homepage-container">
       <h1>Welcome to Jentrix's Kitchen</h1>
-      <p>
-        Discover delicious recipes from my kitchen. We have the best in the
-        region.
-      </p>
-      <p>For more information, click on the link bellow to see what we have.</p>
-      <p>You can give us a call or whatsapp on:- Tel. 0707 567 567</p>
-      <p>Or visit us at LongStreet 3</p>
+
+      {/* Link to view recipes */}
       <Link to="/recipes" className="link-button">
-        View Recipes
+        Recipes
       </Link>
+
+      {/* Link to information about us */}
+      <Link to="/aboutUs" className="link-button">
+        About us
+      </Link>
+
+      {/* Subscription form */}
       <form action="">
-        <label htmlFor="">Email adress</label>
+        <label htmlFor="" className="email-label">
+          Email adress
+        </label>
         <input type="email" />
         <button type="submit">Subscribe to our newsletter</button>
       </form>

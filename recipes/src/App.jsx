@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import React, { useState } from "react";
 import "./App.css";
 import RecipeDetails from "./components/RecipeDetails";
@@ -6,6 +7,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import StarRating from "./components/StarRating";
 
+// Responsive settings for the carousel
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -21,7 +23,9 @@ const responsive = {
   },
 };
 
+// Main App component
 function App() {
+  // State variables using the useState hook
   const [recipes, setRecipes] = useState(recipesData);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,18 +33,20 @@ function App() {
   const [viewingDetails, setViewingDetails] = useState(false);
   const [recipeRating, setRecipeRating] = useState(0);
 
-  const [name, setName] = useState("");
+  // User registration form state variable
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
+  // Function to handle image click and set the selected recipe
   const handleImageClick = (recipe) => {
     setSelectedRecipe(recipe);
   };
 
+  // Function to handle input change in the search bar
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
+  // Function to handle search button click and filter recipes based on the search query
   const handleSearch = () => {
     const results = recipes.filter((recipe) =>
       recipe.recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -49,10 +55,13 @@ function App() {
     setViewingDetails(false);
   };
 
+  // Function to handle view details button click and display recipe details
   const handleViewDetails = (recipe) => {
     setSelectedRecipe(recipe);
     setViewingDetails(true);
   };
+
+  // Function to handle click on star rating and update the recipe's rating
   console.log(selectedRecipe);
   const handleRatingClick = (rating) => {
     if (selectedRecipe) {
@@ -71,28 +80,29 @@ function App() {
     }
   };
 
+  // Function to handle hover on star rating and update the displayed rating
   const handleRatingHover = (rating) => {
     setRecipeRating(rating);
   };
 
+  // Function to handle hover leave on star rating and reset the displayed rating
   const handleRatingHoverLeave = () => {
     setRecipeRating(0);
   };
 
+  // Function to handle user registration form submission
   const handleRegistration = () => {
-    console.log("Name:", name);
     console.log("Email:", email);
-    console.log("Password:", password);
 
-    setName("");
     setEmail("");
-    setPassword("");
   };
 
+  // JSX structure for rendering the application
   return (
     <div className="container">
       <h1>Jentrix's kitchen</h1>
 
+      {/* Search bar */}
       <div className="search-container">
         <input
           type="text"
@@ -103,6 +113,7 @@ function App() {
         <button onClick={handleSearch}>Search</button>
       </div>
 
+      {/* Conditional rendering based on whether viewing details or showing search results or carousel */}
       {viewingDetails ? (
         <RecipeDetails
           recipe={selectedRecipe}
@@ -132,22 +143,19 @@ function App() {
           </div>
         ))
       ) : (
+        // Rendering carousel if no search results
         <Carousel
-          swipeable={false}
-          draggable={false}
+          swipeable={true}
+          draggable={true}
           showDots={true}
           responsive={responsive}
           slidesToSlide={3}
-          infinite={true}
-          autoPlaySpeed={1000}
           keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
           containerClass="carousel-container"
-          removeArrowOnDeviceType={["tablet", "mobile"]}
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px"
         >
+          {/* Mapping over recipes to display in carousel */}
           {recipes.map((recipe, index) => (
             <div key={index} className="recipe-card">
               <img
@@ -167,4 +175,5 @@ function App() {
   );
 }
 
+// Exporting the App component as the default export
 export default App;
